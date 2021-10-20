@@ -16,7 +16,7 @@ diagnostics.route('/')
       "errors": req.body.errors
     }
     dbDiag.push(objToPush);
-    fs.writeFile('../db/diagnostics.json', JSON.stringify(objToPush, null, '\t'), err => err ? console.error(err): null)
+    fs.writeFile('./db/diagnostics.json', JSON.stringify(dbDiag, null, '\t'), err => err ? console.error(err): null)
   })
 
 module.exports = diagnostics;
