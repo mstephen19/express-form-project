@@ -79,9 +79,9 @@ const validateTip = (newTip) => {
 
   // Object to hold our error messages until we are ready to return
   const errorState = {
-    username: '',
-    tip: '',
-    topic: '',
+    username: username,
+    tip: tip,
+    topic: topic,
   };
 
   // Bool value if the username is valid
@@ -124,10 +124,14 @@ const showErrors = (errorObj) => {
 // Helper function to send a POST request to the diagnostics route (/api/diagnostics)
 const submitDiagnostics = (submissionObj) => {
   // TODO: your code here
-  console.info(
-    '⚠️ Create the logic for the fetch POST request in scripts/index.js'
-  );
-  alert('Add your logic to scripts/index.js');
+  console.log(submissionObj);
+  fetch('/api/diagnostics', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(submissionObj)
+  })
 };
 
 // Function to handle when a user submits the feedback form

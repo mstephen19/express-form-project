@@ -1,15 +1,22 @@
 const diagnostics = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const { readAndAppend, readFromFile } = require('../helpers/fsUtils');
+const dbDiag = require('../db/diagnostics.json');
+const fs = require('fs')
 
-// GET Route for retrieving diagnostic information
-diagnostics.get('/', (req, res) => {
-  // TODO: Logic for sending all the content of db/diagnostics.json
-});
-
-// POST Route for a error logging
-diagnostics.post('/', (req, res) => {
-  // TODO: Logic for appending data to the db/diagnostics.json file
-});
+diagnostics.route('/')
+  .get((req, res)=>{
+    res.status(200).json(dbDiag);
+  })
+  .post((req, res)=>{
+    res.send('received!')
+    const objToPush = {
+      "time": Date.now(),
+      "error_id": uuidv4(),
+      "errors": req.body.errors
+    }
+    dbDiag.push(objToPush);
+    fs.writeFile('../db/diagnostics.json', JSON.stringify(objToPush, null, '\t'), err => err ? console.error(err): null)
+  })
 
 module.exports = diagnostics;
